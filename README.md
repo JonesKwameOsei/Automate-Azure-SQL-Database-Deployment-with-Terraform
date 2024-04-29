@@ -293,10 +293,15 @@ The service plan is also running<p>
 Having a glimpse of the configurations in Azure SQL Database will help enhance the configuration. Let us check the configurations. <p>
 ![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/1bfa80f3-64ed-4b2b-9750-8aecc89ca9c0)<p>
 
-6. **Destroy the deployed resources**:
+6. **Destroy the deployed resources**: When the resources are no more service needed, terraform can tear them down to reduce cost. 
    ```
    terraform destroy
    ```
+Resources deleted by terraform successfully.<p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/4f7663ed-1a52-4c9c-a5cb-515d69574d56)<p>
+Let us verify from the Azure Portal if all the resources were deleted.<p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/cd2126e5-574c-4a39-8a13-dc997874768a)<p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/a0a42834-b20f-4333-ac30-9e834efcef59)<p>
 
 ## CI/CD with GitHub Actions
 
