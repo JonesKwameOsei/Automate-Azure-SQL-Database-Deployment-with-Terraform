@@ -18,6 +18,7 @@ The Terraform configuration for this project consists of the following files:
 
 1. **main.tf**: This file defines the Azure resources to be created, such as virtual networks, subnets, virtual machines, and web applications. In our case, we have confiugured reources including:
 -  **resource group**
+-  **Azure SQL Database**
 -  **service plan**
 -  **DotNet Web App**<p>
 Below is the configurations for the main.tf:
@@ -209,9 +210,9 @@ commands will detect it and remind you to do so if necessary.
 ![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/e317ceb5-0217-40de-ab9e-530c512f7243)<p>
 
 Formatting Terraform configuration files using the **terraform fmt** command ensures consistent code style and readability. The files returned as output were well formatted by **Terraform**.
-```
-terraform validate
-```
+  ```
+  terraform validate
+  ```
 ![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/2cf0c526-6e06-4eb6-b6d9-25567a09c837)<p>
 
 Validating the configuration with **terraform validate** checks for syntax errors and compatibility issues, catching problems early in the deployment process. These practices promote reproducibility, maintainability, and reliability of your infrastructure deployments across different environments. The output, **"Success! The configuration is valid"**, means that there is no error in any of the files. 
@@ -224,19 +225,29 @@ Conventionally, we can run **terraform plan** without any argument. However, we 
 ![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/96de6b55-fa9c-483d-bfe1-977a6fcc637e)<p>
 4. **show the tfplan file**
 The the plan is initially stored in a binary format. To display it as a readable text, run:
-```
-terraform show -json tfplan                                 # Makes it readable but not well formatted. Writing the output in a well format is recommended. 
-terraform show -json tfplan >> tfplan.json                  # This saves the output in a json file.
-terraform show -json tfplan | jq '.' > tfplan.json          # Format to a more readable format tfplan.json file
-```
+  ```
+  terraform show -json tfplan                                 # Makes it readable but not well formatted. Writing the output in a well format is recommended. 
+  terraform show -json tfplan >> tfplan.json                  # This saves the output in a json file.
+  terraform show -json tfplan | jq '.' > tfplan.json          # Format to a more readable format tfplan.json file
+  ```
 Before we exceute the plan which will create 7 resources, let's confirm that there no resources in the **Azure Portal**. <p>
 ![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/0a290f37-abad-49b6-81e5-fc0ff8ffad82)<p>
 ![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/f9e91faf-cdbf-4226-bad3-782d18394afb)<p>
+Now we can deploy the resources.<p>
 
 5. **Apply the execution plan**:
    ```
    terraform apply "tfplan"
    ```
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/a6dead9b-8534-448a-9ac4-e9f67fc76123)<p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/8a1c46d4-9a15-4027-8069-9419210eccb6)<p>
+The deployment has been successfully executed. Let us verify this in the **Azure Portal**. <p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/999b9e8e-0232-4d87-8712-9117f498c05d)<p>
+The reource group has been created with all components and the **Azure SQL Database**.<p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/9fdb2cef-8e11-450d-b38f-6cc850eeeb74)<p>
+
+### Connect to the SQL Server:
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/90880a0b-e52c-4e35-8faa-eef9e3766943)
 
 6. **Destroy the deployed resources**:
    ```
