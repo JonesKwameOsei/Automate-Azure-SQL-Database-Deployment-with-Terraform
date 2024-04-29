@@ -247,8 +247,38 @@ The reource group has been created with all components and the **Azure SQL Datab
 ![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/9fdb2cef-8e11-450d-b38f-6cc850eeeb74)<p>
 
 ### Connect to the SQL Server:
-![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/90880a0b-e52c-4e35-8faa-eef9e3766943)
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/90880a0b-e52c-4e35-8faa-eef9e3766943)<p>
+We have successfully connected to the **database**. <p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/62f2118a-a047-43d1-b975-69a08e36e804)<p>
+Now, we can perform some operations in the database since it is ready and running. Let us create a table called **Products**. 
+```
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName NVARCHAR(100),
+    Price DECIMAL(10, 2),
+    Description NVARCHAR(255),
+    StockQuantity INT
+);
+GO;
 
+INSERT INTO Products (ProductID, ProductName, Price, Description, StockQuantity)
+VALUES 
+(1, 'Smartphone', 599.99, 'High-end smartphone with advanced features', 100),
+(2, 'Laptop', 1099.99, 'Powerful laptop for professional use', 50),
+(3, 'Tablet', 399.99, 'Portable tablet for entertainment and productivity', 75),
+(4, 'Headphones', 149.99, 'Wireless headphones with noise-cancellation', 150),
+(5, 'Smartwatch', 249.99, 'Fitness tracker with smartwatch features', 200),
+(6, 'Camera', 799.99, 'Professional DSLR camera with interchangeable lenses', 25),
+(7, 'Television', 1499.99, '4K Ultra HD smart TV with HDR support', 30),
+(8, 'Gaming Console', 399.99, 'Next-generation gaming console for immersive gaming experiences', 100),
+(9, 'Wireless Speaker', 129.99, 'Portable wireless speaker with long battery life', 120),
+(10, 'External Hard Drive', 89.99, 'High-capacity external hard drive for data storage', 80);
+GO;
+
+Select * FROM Products;
+GO;
+```
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/6fd4f65d-10d5-4cc6-bedf-4cebcedb3310)<p>
 6. **Destroy the deployed resources**:
    ```
    terraform destroy
