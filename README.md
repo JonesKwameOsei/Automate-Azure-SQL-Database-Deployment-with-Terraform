@@ -172,21 +172,73 @@ output "webapp_ips" {
 
 ## Terraform Commands to Create Resources
 
-To deploy the Azure infrastructure and web application using Terraform, follow these steps:
+To deploy the **Azure SQL** Database and the **DotNet (.Net)** web application using Terraform, let's run these commands:
 
 1. **Initialize the Terraform working directory**:
    ```
    terraform init
    ```
-2. **Create an execution plan**:
+The output after running the command should look like this:
+```
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding hashicorp/azurerm versions matching "~> 3.101.0"...
+- Installing hashicorp/azurerm v3.101.0...
+- Installed hashicorp/azurerm v3.101.0 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+```
+2. **Format and validate the configuration files**
+  ```
+  terraform fmt
+  ```
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/e317ceb5-0217-40de-ab9e-530c512f7243)<p>
+
+Formatting Terraform configuration files using the **terraform fmt** command ensures consistent code style and readability. The files returned as output were well formatted by **Terraform**.
+```
+terraform validate
+```
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/2cf0c526-6e06-4eb6-b6d9-25567a09c837)<p>
+
+Validating the configuration with **terraform validate** checks for syntax errors and compatibility issues, catching problems early in the deployment process. These practices promote reproducibility, maintainability, and reliability of your infrastructure deployments across different environments. The output, **"Success! The configuration is valid"**, means that there is no error in any of the files. 
+
+3. **Create an execution plan**:
    ```
    terraform plan -out=tfplan
    ```
-3. **Apply the execution plan**:
+Conventionally, we can run **terraform plan** without any argument. However, we added the argument **-out=tfplan** to store our infrastructure plan in a file. The **terraform plan** command generates an **execution plan** that outlines the actions **Terraform** will take to bring the infrastructure to the desired state defined in the configuration files, allowing us to preview the changes before actually applying them.<p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/96de6b55-fa9c-483d-bfe1-977a6fcc637e)<p>
+4. **show the tfplan file**
+The the plan is initially stored in a binary format. To display it as a readable text, run:
+```
+terraform show -json tfplan                                 # Makes it readable but not well formatted. Writing the output in a well format is recommended. 
+terraform show -json tfplan >> tfplan.json                  # This saves the output in a json file.
+terraform show -json tfplan | jq '.' > tfplan.json          # Format to a more readable format tfplan.json file
+```
+Before we exceute the plan which will create 7 resources, let's confirm that there no resources in the **Azure Portal**. <p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/0a290f37-abad-49b6-81e5-fc0ff8ffad82)<p>
+![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/f9e91faf-cdbf-4226-bad3-782d18394afb)<p>
+
+5. **Apply the execution plan**:
    ```
    terraform apply "tfplan"
    ```
-4. **Destroy the deployed resources**:
+
+6. **Destroy the deployed resources**:
    ```
    terraform destroy
    ```
@@ -206,5 +258,3 @@ The GitHub Actions workflow is triggered on push events to the main branch, ensu
 ## Conclusion
 
 This project demonstrates how Terraform can be used to deploy Azure infrastructure and web applications in a consistent, scalable, and automated manner. By integrating Terraform with a CI/CD pipeline using GitHub Actions, you can streamline the deployment process and ensure that your Azure environment remains up-to-date and aligned with your codebase.
-
-Feel free to explore the Terraform configuration files and the GitHub Actions workflow to understand the implementation details and customize them to fit your specific requirements.
