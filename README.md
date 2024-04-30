@@ -351,12 +351,7 @@ To create the secret in GitHub:
 ![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/1222176c-d42c-4d92-8394-53bd8030325e)<p>
 
 ## Code Deployment with GitHub Actions
-To deploy the code in the configration files, we will use GitHub actions instead of the command line. 
-
-### GitHub Action for network resources
-1. I click on **Actions** in the repo (Not in Settings) and then click **set up a workflow yourself.**<p>
-![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/ef742757-8d04-41b5-bba7-2127acd9dd95)<p>
-![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/b9c09db5-462a-41f5-9b6f-bc14db35cb15)<p>
+To deploy the code in the configration files, we will use GitHub actions instead of the command line. <p>
 
 To automate the deployment process, this project includes a GitHub Actions workflow. The workflow consists of the following steps in a **yaml** file called **actions.yaml**:
 
