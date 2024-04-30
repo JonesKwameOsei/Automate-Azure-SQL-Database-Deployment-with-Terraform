@@ -5,12 +5,12 @@ terraform {
       version = "~> 3.101.0"
     }
   }
-  backend "azurerm" {
-    resource_group_name     = "rg-terraform-state-001"
-    storage_account_name    = "cloudninjaterraformstate"
-    container_name          = "tfstate"
-    key                     = "GitHub-Terraform-rg-loganalytics-001"
-  }
+  # backend "azurerm" {
+  #   resource_group_name     = "rg-terraform-state-001"
+  #   storage_account_name    = "cloudninjaterraformstate"
+  #   container_name          = "tfstate"
+  #   key                     = "GitHub-Terraform-rg-loganalytics-001"
+  # }
 }
 
 
