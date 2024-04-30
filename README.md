@@ -458,4 +458,7 @@ Let's confirm from the **Azure Portal that the resources are created. Indeed, th
 
 ## Conclusion
 
-This project demonstrates how Terraform can be used to deploy Azure infrastructure and web applications in a consistent, scalable, and automated manner. By integrating Terraform with a CI/CD pipeline using GitHub Actions, you can streamline the deployment process and ensure that your Azure environment remains up-to-date and aligned with your codebase.
+This project demonstrates how Terraform can be used to deploy Azure infrastructure and web applications in a consistent, scalable, and automated manner. By integrating Terraform with a CI/CD pipeline using GitHub Actions, you can streamline the deployment process and ensure that your Azure environment remains up-to-date and aligned with your codebase.<p>
+
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/8a0ea0f3-d886-4b45-b9a3-8b75f4fa5e0a)
+
