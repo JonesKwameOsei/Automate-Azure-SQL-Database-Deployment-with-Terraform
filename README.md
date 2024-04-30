@@ -450,7 +450,16 @@ Now we will click on the green button **Create pull request**. <p>
 ![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/227b8bea-8fbb-4419-a9a8-64f1dd46c44d)<p>
 To **Merge** the changes to the **main** branch, we will click on the green button **Merge pull request** and then **Confirm merge**. Confirming the nerge will trigger the actions.<p>
 ![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/152bf200-f7f1-455b-abaf-83207efea7a3)<p>
+Pull request successfully merged.<p>
 ![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/c47b47b8-6901-4f41-9859-fcb93a565936)<p>
+
+**GitHub action** running successfully as expected:<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/b8542e0a-ca6c-4c75-b5d3-1fd4143a4fb4)<p>
+
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/5d2fd083-cd08-49c5-a62c-b79b78eabbeb)<p>
+
+Let's confirm from the **Azure Portal that the resources are created. Indeed, the resources have been created.<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/6aa05114-3116-4745-81c0-6d5044443990)<p>
 
 ## Conclusion
 
