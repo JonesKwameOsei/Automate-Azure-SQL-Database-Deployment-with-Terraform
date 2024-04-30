@@ -304,16 +304,153 @@ Let us verify from the Azure Portal if all the resources were deleted.<p>
 ![image](https://github.com/JonesKwameOsei/Azure-Infrastructure-Deployment-with-Terraform/assets/81886509/a0a42834-b20f-4333-ac30-9e834efcef59)<p>
 
 ## CI/CD with GitHub Actions
+Before we can utilise **Github actions** to automate the building, testing and deploying of our infrastructure, we need to do the following:
+1. Clone the Github repository.
+```
+git clone <repo link>
+```
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/233f3b50-6ae4-41ab-8b8f-bb090e21a334)<p>
+2. Create **.github/workflows** directory in the repo.
+```
+mkdir -p .github/workflows
+```
+3. Configure Git. 
+```
+git config --global user.name <username>
+git config --global user.email <user@example.com>
+```
+4. Initialise/rrinitialise the repo
+```
+git init
+```
+5. Cretae hub
+```
+hub create
+```
+6. Create **service princial** / **AppRegistration** for **GitHub actions**
+We will utilise a service principal/app registration to deploy resources from GitHub into Azure. We can create this App registration using **Azure CLI**. Remember to edit the subscription ID to yours before runing the command.
+```
+az account show --query id --output tsv                                                   # Prints the azure subscription account
 
-To automate the deployment process, this project includes a GitHub Actions workflow. The workflow consists of the following steps:
+az account list --query "[].{Name:name, SubscriptionId:id}" --output table                # This command will list all your subscriptions along with their names and IDs in a tabular format.
+
+
+az ad sp create-for-rbac --name "SP-GitHubAction-Blog" --role contributor --scopes /subscriptions/{subscriptionid} --sdk-auth  # Creates the service principal
+```
+7. Create required GitHub secrets.
+To create the secret in GitHub:
+- In the GiHub repo, click on **Settings**
+- Then click on the **DropDown** next to **Secrets and Variables**<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/1032987c-9041-4ee1-ab38-92e33b34e858)<p>
+- Next, click on **Actions**.<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/0ce6d04a-9acd-4449-bbe1-5cbc3e2a790b)<p>
+- Click on **New repository secret** <p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/4c20a15f-bd1c-48bd-a040-6c11166da840)<p>
+- We will create 4 secrets for **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET**, **AZURE_TENANT_ID** and **MVP_SUBSCRIPTION** using the outputs of the **service principal** we created earlier. Each will look like this:<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/6714b39f-1a07-4865-a091-7b99b200546b)<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/1222176c-d42c-4d92-8394-53bd8030325e)<p>
+
+## Code Deployment with GitHub Actions
+To deploy the code in the configration files, we will use GitHub actions instead of the command line. 
+
+### GitHub Action for network resources
+1. I click on **Actions** in the repo (Not in Settings) and then click **set up a workflow yourself.**<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/ef742757-8d04-41b5-bba7-2127acd9dd95)<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/b9c09db5-462a-41f5-9b6f-bc14db35cb15)<p>
+
+To automate the deployment process, this project includes a GitHub Actions workflow. The workflow consists of the following steps in a **yaml** file called **actions.yaml**:
 
 1. **Checkout the repository**: Checkout the code from the repository.
 2. **Setup Terraform**: Install the necessary Terraform version and Azure provider.
 3. **Initialize Terraform**: Run `terraform init` to initialize the working directory.
 4. **Validate Terraform configuration**: Run `terraform validate` to check the syntax and validity of the Terraform configuration.
 5. **Apply Terraform changes**: Run `terraform apply` to deploy the infrastructure changes.
+```
+# This is a basic workflow to help you get started with Actions
 
-The GitHub Actions workflow is triggered on push events to the main branch, ensuring that any changes to the Terraform configuration are automatically deployed to the Azure environment.
+name: Terraform-Azure-SQL-Database-Deployment
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  resourcegroups:
+    name: 'Terraform Depoly Resource'
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Terraform
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: checkout Repo
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform 
+      uses: hashicorp/setup-terraform@v2
+
+    - name: 'Terraform init'
+      run: terraform init 
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }} 
+    
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan 
+      run: terraform plan
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+                    
+    - name: 'Terraform apply'
+      run: terraform apply --auto-approve  
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+```
+
+### Push Changes to GitHub to activate Github Action
+The GitHub Actions workflow is triggered on push events to the main branch, ensuring that any changes to the Terraform configuration are automatically deployed to the Azure environment. It is recommended to push the changes from a different branch, then merge it with the main branch by making a **pull request**.
+```
+git checkout -b deployAzureSQLDB        # Creates a new braanch and switch into it from the main
+
+git add .                               # Adds the changes to the repo
+
+git status                              # Lists the changes to be commited or pushed to the repo
+
+git commit -m "commit message"          # States the reason for the push or changes
+
+git push origin deployAzureSQLDB       # pushes the changes to the repo from the new branch
+```
+We need to create the pull request to merge the changes to the main branch to trigger the actions.<p>
+
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/36c05487-8fbd-4714-841b-ab9ac4d8b866)<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/4df5b980-181c-4a13-8454-06a674dc337e)<p>
+Now we will click on the green button **Create pull request**. <p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/227b8bea-8fbb-4419-a9a8-64f1dd46c44d)<p>
+To **Merge** the changes to the **main** branch, we will click on the green button **Merge pull request** and then **Confirm merge**. Confirming the nerge will trigger the actions.<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/152bf200-f7f1-455b-abaf-83207efea7a3)<p>
+![image](https://github.com/JonesKwameOsei/Automate-Azure-SQL-Database-Deployment-with-Terraform/assets/81886509/c47b47b8-6901-4f41-9859-fcb93a565936)<p>
 
 ## Conclusion
 
