@@ -1,4 +1,4 @@
-resource_group_name     = "terraform-mssql-rg"
+resource_group_name     = "terraform-azure-mssql-rg"
 resource_group_location = "westeurope"
 app_service_plan_name   = "appserviceplan-web-21"
 app_service_name        = "terraform-webapp"
