@@ -1,0 +1,1290 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.7.3",
+  "variables": {
+    "app_service_name": {
+      "value": "terraform-webapp"
+    },
+    "app_service_plan_name": {
+      "value": "appserviceplan-web-21"
+    },
+    "resource_group_location": {
+      "value": "westeurope"
+    },
+    "resource_group_name": {
+      "value": "terraform-mssql-rg"
+    },
+    "sql_admin_login": {
+      "value": "jones23"
+    },
+    "sql_admin_password": {
+      "value": "101Jones@_12345"
+    },
+    "sql_database_name": {
+      "value": "productsDB"
+    },
+    "sql_server_name": {
+      "value": "terraform-mssqlserver"
+    }
+  },
+  "planned_values": {
+    "outputs": {
+      "webapp_ips": {
+        "sensitive": false
+      },
+      "webapp_url": {
+        "sensitive": false
+      }
+    },
+    "root_module": {
+      "resources": [
+        {
+          "address": "azurerm_mssql_database.db",
+          "mode": "managed",
+          "type": "azurerm_mssql_database",
+          "name": "db",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 1,
+          "values": {
+            "collation": "SQL_Latin1_General_CP1_CI_AS",
+            "create_mode": "Default",
+            "elastic_pool_id": null,
+            "geo_backup_enabled": true,
+            "identity": [],
+            "import": [],
+            "license_type": "LicenseIncluded",
+            "name": "ProductsDB",
+            "recover_database_id": null,
+            "recovery_point_id": null,
+            "restore_dropped_database_id": null,
+            "restore_long_term_retention_backup_id": null,
+            "sku_name": "S0",
+            "storage_account_type": "Geo",
+            "tags": null,
+            "timeouts": null,
+            "transparent_data_encryption_enabled": true,
+            "transparent_data_encryption_key_automatic_rotation_enabled": false,
+            "transparent_data_encryption_key_vault_key_id": null,
+            "zone_redundant": false
+          },
+          "sensitive_values": {
+            "identity": [],
+            "import": [],
+            "long_term_retention_policy": [],
+            "short_term_retention_policy": [],
+            "threat_detection_policy": []
+          }
+        },
+        {
+          "address": "azurerm_mssql_database_extended_auditing_policy.policy",
+          "mode": "managed",
+          "type": "azurerm_mssql_database_extended_auditing_policy",
+          "name": "policy",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 0,
+          "values": {
+            "enabled": true,
+            "log_monitoring_enabled": true,
+            "retention_in_days": 1,
+            "storage_account_access_key_is_secondary": false,
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "storage_account_access_key": true
+          }
+        },
+        {
+          "address": "azurerm_mssql_server.sql",
+          "mode": "managed",
+          "type": "azurerm_mssql_server",
+          "name": "sql",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 0,
+          "values": {
+            "administrator_login": "jones23",
+            "administrator_login_password": "101Jones@_12345",
+            "azuread_administrator": [],
+            "connection_policy": "Default",
+            "identity": [],
+            "location": "westeurope",
+            "minimum_tls_version": "1.2",
+            "name": "terraform-mssqlserver",
+            "outbound_network_restriction_enabled": false,
+            "public_network_access_enabled": true,
+            "resource_group_name": "terraform-mssql-rg",
+            "tags": null,
+            "timeouts": null,
+            "transparent_data_encryption_key_vault_key_id": null,
+            "version": "12.0"
+          },
+          "sensitive_values": {
+            "azuread_administrator": [],
+            "identity": [],
+            "restorable_dropped_database_ids": []
+          }
+        },
+        {
+          "address": "azurerm_resource_group.rg",
+          "mode": "managed",
+          "type": "azurerm_resource_group",
+          "name": "rg",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 0,
+          "values": {
+            "location": "westeurope",
+            "managed_by": null,
+            "name": "terraform-mssql-rg",
+            "tags": {
+              "environment": "sandbox"
+            },
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "tags": {}
+          }
+        },
+        {
+          "address": "azurerm_service_plan.plan",
+          "mode": "managed",
+          "type": "azurerm_service_plan",
+          "name": "plan",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 1,
+          "values": {
+            "app_service_environment_id": null,
+            "location": "westeurope",
+            "name": "appserviceplan-web-21",
+            "os_type": "Windows",
+            "per_site_scaling_enabled": false,
+            "resource_group_name": "terraform-mssql-rg",
+            "sku_name": "P1v2",
+            "tags": null,
+            "timeouts": null,
+            "zone_balancing_enabled": null
+          },
+          "sensitive_values": {}
+        },
+        {
+          "address": "azurerm_storage_account.storage",
+          "mode": "managed",
+          "type": "azurerm_storage_account",
+          "name": "storage",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 4,
+          "values": {
+            "account_kind": "StorageV2",
+            "account_replication_type": "LRS",
+            "account_tier": "Standard",
+            "allow_nested_items_to_be_public": true,
+            "allowed_copy_scope": null,
+            "azure_files_authentication": [],
+            "cross_tenant_replication_enabled": true,
+            "custom_domain": [],
+            "customer_managed_key": [],
+            "default_to_oauth_authentication": false,
+            "dns_endpoint_type": "Standard",
+            "edge_zone": null,
+            "enable_https_traffic_only": true,
+            "identity": [],
+            "immutability_policy": [],
+            "infrastructure_encryption_enabled": false,
+            "is_hns_enabled": false,
+            "local_user_enabled": true,
+            "location": "westeurope",
+            "min_tls_version": "TLS1_2",
+            "name": "tfstorage01jones",
+            "nfsv3_enabled": false,
+            "public_network_access_enabled": true,
+            "queue_encryption_key_type": "Service",
+            "resource_group_name": "terraform-mssql-rg",
+            "sas_policy": [],
+            "sftp_enabled": false,
+            "shared_access_key_enabled": true,
+            "static_website": [],
+            "table_encryption_key_type": "Service",
+            "tags": null,
+            "timeouts": null
+          },
+          "sensitive_values": {
+            "azure_files_authentication": [],
+            "blob_properties": [],
+            "custom_domain": [],
+            "customer_managed_key": [],
+            "identity": [],
+            "immutability_policy": [],
+            "network_rules": [],
+            "queue_properties": [],
+            "routing": [],
+            "sas_policy": [],
+            "share_properties": [],
+            "static_website": []
+          }
+        },
+        {
+          "address": "azurerm_windows_web_app.app",
+          "mode": "managed",
+          "type": "azurerm_windows_web_app",
+          "name": "app",
+          "provider_name": "registry.terraform.io/hashicorp/azurerm",
+          "schema_version": 1,
+          "values": {
+            "app_settings": {
+              "SOME_KEY": "some-value"
+            },
+            "auth_settings": [],
+            "auth_settings_v2": [],
+            "backup": [],
+            "client_affinity_enabled": false,
+            "client_certificate_enabled": false,
+            "client_certificate_exclusion_paths": null,
+            "client_certificate_mode": "Required",
+            "connection_string": [
+              {
+                "name": "Database",
+                "type": "SQLAzure",
+                "value": "Server=tcp:azurerm_mssql_server.sql.fully_qualified_domain_name Database=azurerm_mssql_database.db.name;User ID=azurerm_mssql_server.sql.administrator_login;Password=azurerm_mssql_server.sql.administrator_login_password;Trusted_Connection=False;Encrypt=True;"
+              }
+            ],
+            "enabled": true,
+            "ftp_publish_basic_authentication_enabled": true,
+            "https_only": false,
+            "identity": [],
+            "location": "westeurope",
+            "logs": [],
+            "name": "mywebapp-01357",
+            "public_network_access_enabled": true,
+            "resource_group_name": "terraform-mssql-rg",
+            "site_config": [
+              {
+                "always_on": true,
+                "api_definition_url": null,
+                "api_management_api_id": null,
+                "app_command_line": null,
+                "application_stack": [
+                  {
+                    "docker_container_name": null,
+                    "docker_container_registry": null,
+                    "docker_container_tag": null,
+                    "docker_image_name": null,
+                    "dotnet_core_version": null,
+                    "dotnet_version": "v8.0",
+                    "java_container": null,
+                    "java_container_version": null,
+                    "java_version": null,
+                    "node_version": null,
+                    "python": false,
+                    "tomcat_version": null
+                  }
+                ],
+                "auto_heal_enabled": false,
+                "auto_heal_setting": [],
+                "container_registry_managed_identity_client_id": null,
+                "container_registry_use_managed_identity": false,
+                "cors": [],
+                "ftps_state": "Disabled",
+                "handler_mapping": [],
+                "health_check_path": null,
+                "http2_enabled": false,
+                "ip_restriction": [],
+                "ip_restriction_default_action": "Allow",
+                "load_balancing_mode": "LeastRequests",
+                "local_mysql_enabled": false,
+                "managed_pipeline_mode": "Integrated",
+                "minimum_tls_version": "1.2",
+                "remote_debugging_enabled": false,
+                "scm_ip_restriction": [],
+                "scm_ip_restriction_default_action": "Allow",
+                "scm_minimum_tls_version": "1.2",
+                "scm_use_main_ip_restriction": false,
+                "use_32_bit_worker": true,
+                "virtual_application": [],
+                "vnet_route_all_enabled": false,
+                "websockets_enabled": false
+              }
+            ],
+            "sticky_settings": [],
+            "storage_account": [],
+            "tags": null,
+            "timeouts": null,
+            "virtual_network_subnet_id": null,
+            "webdeploy_publish_basic_authentication_enabled": true
+          },
+          "sensitive_values": {
+            "app_settings": {},
+            "auth_settings": [],
+            "auth_settings_v2": [],
+            "backup": [],
+            "connection_string": [
+              {}
+            ],
+            "identity": [],
+            "logs": [],
+            "outbound_ip_address_list": [],
+            "possible_outbound_ip_address_list": [],
+            "site_config": [
+              {
+                "application_stack": [
+                  {}
+                ],
+                "auto_heal_setting": [],
+                "cors": [],
+                "default_documents": [],
+                "handler_mapping": [],
+                "ip_restriction": [],
+                "scm_ip_restriction": [],
+                "virtual_application": []
+              }
+            ],
+            "site_credential": [],
+            "sticky_settings": [],
+            "storage_account": []
+          }
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "azurerm_mssql_database.db",
+      "mode": "managed",
+      "type": "azurerm_mssql_database",
+      "name": "db",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "create_mode": "Default",
+          "elastic_pool_id": null,
+          "geo_backup_enabled": true,
+          "identity": [],
+          "import": [],
+          "license_type": "LicenseIncluded",
+          "name": "ProductsDB",
+          "recover_database_id": null,
+          "recovery_point_id": null,
+          "restore_dropped_database_id": null,
+          "restore_long_term_retention_backup_id": null,
+          "sku_name": "S0",
+          "storage_account_type": "Geo",
+          "tags": null,
+          "timeouts": null,
+          "transparent_data_encryption_enabled": true,
+          "transparent_data_encryption_key_automatic_rotation_enabled": false,
+          "transparent_data_encryption_key_vault_key_id": null,
+          "zone_redundant": false
+        },
+        "after_unknown": {
+          "auto_pause_delay_in_minutes": true,
+          "creation_source_database_id": true,
+          "enclave_type": true,
+          "id": true,
+          "identity": [],
+          "import": [],
+          "ledger_enabled": true,
+          "long_term_retention_policy": true,
+          "maintenance_configuration_name": true,
+          "max_size_gb": true,
+          "min_capacity": true,
+          "read_replica_count": true,
+          "read_scale": true,
+          "restore_point_in_time": true,
+          "sample_name": true,
+          "secondary_type": true,
+          "server_id": true,
+          "short_term_retention_policy": true,
+          "threat_detection_policy": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "identity": [],
+          "import": [],
+          "long_term_retention_policy": [],
+          "short_term_retention_policy": [],
+          "threat_detection_policy": []
+        }
+      }
+    },
+    {
+      "address": "azurerm_mssql_database_extended_auditing_policy.policy",
+      "mode": "managed",
+      "type": "azurerm_mssql_database_extended_auditing_policy",
+      "name": "policy",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "enabled": true,
+          "log_monitoring_enabled": true,
+          "retention_in_days": 1,
+          "storage_account_access_key_is_secondary": false,
+          "timeouts": null
+        },
+        "after_unknown": {
+          "database_id": true,
+          "id": true,
+          "storage_account_access_key": true,
+          "storage_endpoint": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "storage_account_access_key": true
+        }
+      }
+    },
+    {
+      "address": "azurerm_mssql_server.sql",
+      "mode": "managed",
+      "type": "azurerm_mssql_server",
+      "name": "sql",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "administrator_login": "jones23",
+          "administrator_login_password": "101Jones@_12345",
+          "azuread_administrator": [],
+          "connection_policy": "Default",
+          "identity": [],
+          "location": "westeurope",
+          "minimum_tls_version": "1.2",
+          "name": "terraform-mssqlserver",
+          "outbound_network_restriction_enabled": false,
+          "public_network_access_enabled": true,
+          "resource_group_name": "terraform-mssql-rg",
+          "tags": null,
+          "timeouts": null,
+          "transparent_data_encryption_key_vault_key_id": null,
+          "version": "12.0"
+        },
+        "after_unknown": {
+          "azuread_administrator": [],
+          "fully_qualified_domain_name": true,
+          "id": true,
+          "identity": [],
+          "primary_user_assigned_identity_id": true,
+          "restorable_dropped_database_ids": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "administrator_login_password": true,
+          "azuread_administrator": [],
+          "identity": [],
+          "restorable_dropped_database_ids": []
+        }
+      }
+    },
+    {
+      "address": "azurerm_resource_group.rg",
+      "mode": "managed",
+      "type": "azurerm_resource_group",
+      "name": "rg",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "location": "westeurope",
+          "managed_by": null,
+          "name": "terraform-mssql-rg",
+          "tags": {
+            "environment": "sandbox"
+          },
+          "timeouts": null
+        },
+        "after_unknown": {
+          "id": true,
+          "tags": {}
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "tags": {}
+        }
+      }
+    },
+    {
+      "address": "azurerm_service_plan.plan",
+      "mode": "managed",
+      "type": "azurerm_service_plan",
+      "name": "plan",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "app_service_environment_id": null,
+          "location": "westeurope",
+          "name": "appserviceplan-web-21",
+          "os_type": "Windows",
+          "per_site_scaling_enabled": false,
+          "resource_group_name": "terraform-mssql-rg",
+          "sku_name": "P1v2",
+          "tags": null,
+          "timeouts": null,
+          "zone_balancing_enabled": null
+        },
+        "after_unknown": {
+          "id": true,
+          "kind": true,
+          "maximum_elastic_worker_count": true,
+          "reserved": true,
+          "worker_count": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "azurerm_storage_account.storage",
+      "mode": "managed",
+      "type": "azurerm_storage_account",
+      "name": "storage",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "account_kind": "StorageV2",
+          "account_replication_type": "LRS",
+          "account_tier": "Standard",
+          "allow_nested_items_to_be_public": true,
+          "allowed_copy_scope": null,
+          "azure_files_authentication": [],
+          "cross_tenant_replication_enabled": true,
+          "custom_domain": [],
+          "customer_managed_key": [],
+          "default_to_oauth_authentication": false,
+          "dns_endpoint_type": "Standard",
+          "edge_zone": null,
+          "enable_https_traffic_only": true,
+          "identity": [],
+          "immutability_policy": [],
+          "infrastructure_encryption_enabled": false,
+          "is_hns_enabled": false,
+          "local_user_enabled": true,
+          "location": "westeurope",
+          "min_tls_version": "TLS1_2",
+          "name": "tfstorage01jones",
+          "nfsv3_enabled": false,
+          "public_network_access_enabled": true,
+          "queue_encryption_key_type": "Service",
+          "resource_group_name": "terraform-mssql-rg",
+          "sas_policy": [],
+          "sftp_enabled": false,
+          "shared_access_key_enabled": true,
+          "static_website": [],
+          "table_encryption_key_type": "Service",
+          "tags": null,
+          "timeouts": null
+        },
+        "after_unknown": {
+          "access_tier": true,
+          "azure_files_authentication": [],
+          "blob_properties": true,
+          "custom_domain": [],
+          "customer_managed_key": [],
+          "id": true,
+          "identity": [],
+          "immutability_policy": [],
+          "large_file_share_enabled": true,
+          "network_rules": true,
+          "primary_access_key": true,
+          "primary_blob_connection_string": true,
+          "primary_blob_endpoint": true,
+          "primary_blob_host": true,
+          "primary_blob_internet_endpoint": true,
+          "primary_blob_internet_host": true,
+          "primary_blob_microsoft_endpoint": true,
+          "primary_blob_microsoft_host": true,
+          "primary_connection_string": true,
+          "primary_dfs_endpoint": true,
+          "primary_dfs_host": true,
+          "primary_dfs_internet_endpoint": true,
+          "primary_dfs_internet_host": true,
+          "primary_dfs_microsoft_endpoint": true,
+          "primary_dfs_microsoft_host": true,
+          "primary_file_endpoint": true,
+          "primary_file_host": true,
+          "primary_file_internet_endpoint": true,
+          "primary_file_internet_host": true,
+          "primary_file_microsoft_endpoint": true,
+          "primary_file_microsoft_host": true,
+          "primary_location": true,
+          "primary_queue_endpoint": true,
+          "primary_queue_host": true,
+          "primary_queue_microsoft_endpoint": true,
+          "primary_queue_microsoft_host": true,
+          "primary_table_endpoint": true,
+          "primary_table_host": true,
+          "primary_table_microsoft_endpoint": true,
+          "primary_table_microsoft_host": true,
+          "primary_web_endpoint": true,
+          "primary_web_host": true,
+          "primary_web_internet_endpoint": true,
+          "primary_web_internet_host": true,
+          "primary_web_microsoft_endpoint": true,
+          "primary_web_microsoft_host": true,
+          "queue_properties": true,
+          "routing": true,
+          "sas_policy": [],
+          "secondary_access_key": true,
+          "secondary_blob_connection_string": true,
+          "secondary_blob_endpoint": true,
+          "secondary_blob_host": true,
+          "secondary_blob_internet_endpoint": true,
+          "secondary_blob_internet_host": true,
+          "secondary_blob_microsoft_endpoint": true,
+          "secondary_blob_microsoft_host": true,
+          "secondary_connection_string": true,
+          "secondary_dfs_endpoint": true,
+          "secondary_dfs_host": true,
+          "secondary_dfs_internet_endpoint": true,
+          "secondary_dfs_internet_host": true,
+          "secondary_dfs_microsoft_endpoint": true,
+          "secondary_dfs_microsoft_host": true,
+          "secondary_file_endpoint": true,
+          "secondary_file_host": true,
+          "secondary_file_internet_endpoint": true,
+          "secondary_file_internet_host": true,
+          "secondary_file_microsoft_endpoint": true,
+          "secondary_file_microsoft_host": true,
+          "secondary_location": true,
+          "secondary_queue_endpoint": true,
+          "secondary_queue_host": true,
+          "secondary_queue_microsoft_endpoint": true,
+          "secondary_queue_microsoft_host": true,
+          "secondary_table_endpoint": true,
+          "secondary_table_host": true,
+          "secondary_table_microsoft_endpoint": true,
+          "secondary_table_microsoft_host": true,
+          "secondary_web_endpoint": true,
+          "secondary_web_host": true,
+          "secondary_web_internet_endpoint": true,
+          "secondary_web_internet_host": true,
+          "secondary_web_microsoft_endpoint": true,
+          "secondary_web_microsoft_host": true,
+          "share_properties": true,
+          "static_website": []
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "azure_files_authentication": [],
+          "blob_properties": [],
+          "custom_domain": [],
+          "customer_managed_key": [],
+          "identity": [],
+          "immutability_policy": [],
+          "network_rules": [],
+          "primary_access_key": true,
+          "primary_blob_connection_string": true,
+          "primary_connection_string": true,
+          "queue_properties": [],
+          "routing": [],
+          "sas_policy": [],
+          "secondary_access_key": true,
+          "secondary_blob_connection_string": true,
+          "secondary_connection_string": true,
+          "share_properties": [],
+          "static_website": []
+        }
+      }
+    },
+    {
+      "address": "azurerm_windows_web_app.app",
+      "mode": "managed",
+      "type": "azurerm_windows_web_app",
+      "name": "app",
+      "provider_name": "registry.terraform.io/hashicorp/azurerm",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "app_settings": {
+            "SOME_KEY": "some-value"
+          },
+          "auth_settings": [],
+          "auth_settings_v2": [],
+          "backup": [],
+          "client_affinity_enabled": false,
+          "client_certificate_enabled": false,
+          "client_certificate_exclusion_paths": null,
+          "client_certificate_mode": "Required",
+          "connection_string": [
+            {
+              "name": "Database",
+              "type": "SQLAzure",
+              "value": "Server=tcp:azurerm_mssql_server.sql.fully_qualified_domain_name Database=azurerm_mssql_database.db.name;User ID=azurerm_mssql_server.sql.administrator_login;Password=azurerm_mssql_server.sql.administrator_login_password;Trusted_Connection=False;Encrypt=True;"
+            }
+          ],
+          "enabled": true,
+          "ftp_publish_basic_authentication_enabled": true,
+          "https_only": false,
+          "identity": [],
+          "location": "westeurope",
+          "logs": [],
+          "name": "mywebapp-01357",
+          "public_network_access_enabled": true,
+          "resource_group_name": "terraform-mssql-rg",
+          "site_config": [
+            {
+              "always_on": true,
+              "api_definition_url": null,
+              "api_management_api_id": null,
+              "app_command_line": null,
+              "application_stack": [
+                {
+                  "docker_container_name": null,
+                  "docker_container_registry": null,
+                  "docker_container_tag": null,
+                  "docker_image_name": null,
+                  "dotnet_core_version": null,
+                  "dotnet_version": "v8.0",
+                  "java_container": null,
+                  "java_container_version": null,
+                  "java_version": null,
+                  "node_version": null,
+                  "python": false,
+                  "tomcat_version": null
+                }
+              ],
+              "auto_heal_enabled": false,
+              "auto_heal_setting": [],
+              "container_registry_managed_identity_client_id": null,
+              "container_registry_use_managed_identity": false,
+              "cors": [],
+              "ftps_state": "Disabled",
+              "handler_mapping": [],
+              "health_check_path": null,
+              "http2_enabled": false,
+              "ip_restriction": [],
+              "ip_restriction_default_action": "Allow",
+              "load_balancing_mode": "LeastRequests",
+              "local_mysql_enabled": false,
+              "managed_pipeline_mode": "Integrated",
+              "minimum_tls_version": "1.2",
+              "remote_debugging_enabled": false,
+              "scm_ip_restriction": [],
+              "scm_ip_restriction_default_action": "Allow",
+              "scm_minimum_tls_version": "1.2",
+              "scm_use_main_ip_restriction": false,
+              "use_32_bit_worker": true,
+              "virtual_application": [],
+              "vnet_route_all_enabled": false,
+              "websockets_enabled": false
+            }
+          ],
+          "sticky_settings": [],
+          "storage_account": [],
+          "tags": null,
+          "timeouts": null,
+          "virtual_network_subnet_id": null,
+          "webdeploy_publish_basic_authentication_enabled": true
+        },
+        "after_unknown": {
+          "app_settings": {},
+          "auth_settings": [],
+          "auth_settings_v2": [],
+          "backup": [],
+          "connection_string": [
+            {}
+          ],
+          "custom_domain_verification_id": true,
+          "default_hostname": true,
+          "hosting_environment_id": true,
+          "id": true,
+          "identity": [],
+          "key_vault_reference_identity_id": true,
+          "kind": true,
+          "logs": [],
+          "outbound_ip_address_list": true,
+          "outbound_ip_addresses": true,
+          "possible_outbound_ip_address_list": true,
+          "possible_outbound_ip_addresses": true,
+          "service_plan_id": true,
+          "site_config": [
+            {
+              "application_stack": [
+                {
+                  "current_stack": true,
+                  "docker_registry_password": true,
+                  "docker_registry_url": true,
+                  "docker_registry_username": true,
+                  "java_embedded_server_enabled": true,
+                  "php_version": true,
+                  "python_version": true
+                }
+              ],
+              "auto_heal_setting": [],
+              "cors": [],
+              "default_documents": true,
+              "detailed_error_logging_enabled": true,
+              "handler_mapping": [],
+              "health_check_eviction_time_in_min": true,
+              "ip_restriction": [],
+              "linux_fx_version": true,
+              "remote_debugging_version": true,
+              "scm_ip_restriction": [],
+              "scm_type": true,
+              "virtual_application": [],
+              "windows_fx_version": true,
+              "worker_count": true
+            }
+          ],
+          "site_credential": true,
+          "sticky_settings": [],
+          "storage_account": [],
+          "zip_deploy_file": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "app_settings": {},
+          "auth_settings": [],
+          "auth_settings_v2": [],
+          "backup": [],
+          "connection_string": true,
+          "custom_domain_verification_id": true,
+          "identity": [],
+          "logs": [],
+          "outbound_ip_address_list": [],
+          "possible_outbound_ip_address_list": [],
+          "site_config": [
+            {
+              "application_stack": [
+                {
+                  "docker_registry_password": true
+                }
+              ],
+              "auto_heal_setting": [],
+              "cors": [],
+              "default_documents": [],
+              "handler_mapping": [],
+              "ip_restriction": [],
+              "scm_ip_restriction": [],
+              "virtual_application": []
+            }
+          ],
+          "site_credential": true,
+          "sticky_settings": [],
+          "storage_account": []
+        }
+      }
+    }
+  ],
+  "output_changes": {
+    "webapp_ips": {
+      "actions": [
+        "create"
+      ],
+      "before": null,
+      "after_unknown": true,
+      "before_sensitive": false,
+      "after_sensitive": false
+    },
+    "webapp_url": {
+      "actions": [
+        "create"
+      ],
+      "before": null,
+      "after_unknown": true,
+      "before_sensitive": false,
+      "after_sensitive": false
+    }
+  },
+  "configuration": {
+    "provider_config": {
+      "azurerm": {
+        "name": "azurerm",
+        "full_name": "registry.terraform.io/hashicorp/azurerm",
+        "version_constraint": "~> 3.101.0",
+        "expressions": {
+          "features": [
+            {}
+          ]
+        }
+      }
+    },
+    "root_module": {
+      "outputs": {
+        "webapp_ips": {
+          "expression": {
+            "references": [
+              "azurerm_windows_web_app.app.outbound_ip_addresses",
+              "azurerm_windows_web_app.app"
+            ]
+          }
+        },
+        "webapp_url": {
+          "expression": {
+            "references": [
+              "azurerm_windows_web_app.app.default_hostname",
+              "azurerm_windows_web_app.app"
+            ]
+          }
+        }
+      },
+      "resources": [
+        {
+          "address": "azurerm_mssql_database.db",
+          "mode": "managed",
+          "type": "azurerm_mssql_database",
+          "name": "db",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "collation": {
+              "constant_value": "SQL_Latin1_General_CP1_CI_AS"
+            },
+            "license_type": {
+              "constant_value": "LicenseIncluded"
+            },
+            "name": {
+              "constant_value": "ProductsDB"
+            },
+            "server_id": {
+              "references": [
+                "azurerm_mssql_server.sql.id",
+                "azurerm_mssql_server.sql"
+              ]
+            },
+            "sku_name": {
+              "constant_value": "S0"
+            },
+            "zone_redundant": {
+              "constant_value": false
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "azurerm_mssql_database_extended_auditing_policy.policy",
+          "mode": "managed",
+          "type": "azurerm_mssql_database_extended_auditing_policy",
+          "name": "policy",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "database_id": {
+              "references": [
+                "azurerm_mssql_database.db.id",
+                "azurerm_mssql_database.db"
+              ]
+            },
+            "retention_in_days": {
+              "constant_value": 1
+            },
+            "storage_account_access_key": {
+              "references": [
+                "azurerm_storage_account.storage.primary_access_key",
+                "azurerm_storage_account.storage"
+              ]
+            },
+            "storage_account_access_key_is_secondary": {
+              "constant_value": false
+            },
+            "storage_endpoint": {
+              "references": [
+                "azurerm_storage_account.storage.primary_blob_endpoint",
+                "azurerm_storage_account.storage"
+              ]
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "azurerm_mssql_server.sql",
+          "mode": "managed",
+          "type": "azurerm_mssql_server",
+          "name": "sql",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "administrator_login": {
+              "references": [
+                "var.sql_admin_login"
+              ]
+            },
+            "administrator_login_password": {
+              "references": [
+                "var.sql_admin_password"
+              ]
+            },
+            "location": {
+              "references": [
+                "azurerm_resource_group.rg.location",
+                "azurerm_resource_group.rg"
+              ]
+            },
+            "name": {
+              "references": [
+                "var.sql_server_name"
+              ]
+            },
+            "resource_group_name": {
+              "references": [
+                "azurerm_resource_group.rg.name",
+                "azurerm_resource_group.rg"
+              ]
+            },
+            "version": {
+              "constant_value": "12.0"
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "azurerm_resource_group.rg",
+          "mode": "managed",
+          "type": "azurerm_resource_group",
+          "name": "rg",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "location": {
+              "references": [
+                "var.resource_group_location"
+              ]
+            },
+            "name": {
+              "references": [
+                "var.resource_group_name"
+              ]
+            },
+            "tags": {
+              "constant_value": {
+                "environment": "sandbox"
+              }
+            }
+          },
+          "schema_version": 0
+        },
+        {
+          "address": "azurerm_service_plan.plan",
+          "mode": "managed",
+          "type": "azurerm_service_plan",
+          "name": "plan",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "location": {
+              "references": [
+                "azurerm_resource_group.rg.location",
+                "azurerm_resource_group.rg"
+              ]
+            },
+            "name": {
+              "references": [
+                "var.app_service_plan_name"
+              ]
+            },
+            "os_type": {
+              "constant_value": "Windows"
+            },
+            "resource_group_name": {
+              "references": [
+                "azurerm_resource_group.rg.name",
+                "azurerm_resource_group.rg"
+              ]
+            },
+            "sku_name": {
+              "constant_value": "P1v2"
+            }
+          },
+          "schema_version": 1
+        },
+        {
+          "address": "azurerm_storage_account.storage",
+          "mode": "managed",
+          "type": "azurerm_storage_account",
+          "name": "storage",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "account_replication_type": {
+              "constant_value": "LRS"
+            },
+            "account_tier": {
+              "constant_value": "Standard"
+            },
+            "location": {
+              "references": [
+                "azurerm_resource_group.rg.location",
+                "azurerm_resource_group.rg"
+              ]
+            },
+            "name": {
+              "constant_value": "tfstorage01jones"
+            },
+            "resource_group_name": {
+              "references": [
+                "azurerm_resource_group.rg.name",
+                "azurerm_resource_group.rg"
+              ]
+            }
+          },
+          "schema_version": 4
+        },
+        {
+          "address": "azurerm_windows_web_app.app",
+          "mode": "managed",
+          "type": "azurerm_windows_web_app",
+          "name": "app",
+          "provider_config_key": "azurerm",
+          "expressions": {
+            "app_settings": {
+              "constant_value": {
+                "SOME_KEY": "some-value"
+              }
+            },
+            "connection_string": [
+              {
+                "name": {
+                  "constant_value": "Database"
+                },
+                "type": {
+                  "constant_value": "SQLAzure"
+                },
+                "value": {
+                  "constant_value": "Server=tcp:azurerm_mssql_server.sql.fully_qualified_domain_name Database=azurerm_mssql_database.db.name;User ID=azurerm_mssql_server.sql.administrator_login;Password=azurerm_mssql_server.sql.administrator_login_password;Trusted_Connection=False;Encrypt=True;"
+                }
+              }
+            ],
+            "location": {
+              "references": [
+                "azurerm_service_plan.plan.location",
+                "azurerm_service_plan.plan"
+              ]
+            },
+            "name": {
+              "constant_value": "mywebapp-01357"
+            },
+            "resource_group_name": {
+              "references": [
+                "azurerm_resource_group.rg.name",
+                "azurerm_resource_group.rg"
+              ]
+            },
+            "service_plan_id": {
+              "references": [
+                "azurerm_service_plan.plan.id",
+                "azurerm_service_plan.plan"
+              ]
+            },
+            "site_config": [
+              {
+                "application_stack": [
+                  {
+                    "dotnet_version": {
+                      "constant_value": "v8.0"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "schema_version": 1
+        }
+      ],
+      "variables": {
+        "app_service_name": {
+          "description": "App Service name in Azure"
+        },
+        "app_service_plan_name": {
+          "description": "App Service Plan name in Azure"
+        },
+        "resource_group_location": {
+          "description": "RG location in Azure"
+        },
+        "resource_group_name": {
+          "description": "RG name in Azure"
+        },
+        "sql_admin_login": {
+          "description": "SQL Server login name in Azure"
+        },
+        "sql_admin_password": {
+          "description": "SQL Server password name in Azure"
+        },
+        "sql_database_name": {
+          "description": "SQL Database name in Azure"
+        },
+        "sql_server_name": {
+          "description": "SQL Server instance name in Azure"
+        }
+      }
+    }
+  },
+  "relevant_attributes": [
+    {
+      "resource": "azurerm_resource_group.rg",
+      "attribute": [
+        "location"
+      ]
+    },
+    {
+      "resource": "azurerm_mssql_server.sql",
+      "attribute": [
+        "id"
+      ]
+    },
+    {
+      "resource": "azurerm_service_plan.plan",
+      "attribute": [
+        "id"
+      ]
+    },
+    {
+      "resource": "azurerm_resource_group.rg",
+      "attribute": [
+        "name"
+      ]
+    },
+    {
+      "resource": "azurerm_storage_account.storage",
+      "attribute": [
+        "primary_access_key"
+      ]
+    },
+    {
+      "resource": "azurerm_storage_account.storage",
+      "attribute": [
+        "primary_blob_endpoint"
+      ]
+    },
+    {
+      "resource": "azurerm_mssql_database.db",
+      "attribute": [
+        "id"
+      ]
+    },
+    {
+      "resource": "azurerm_windows_web_app.app",
+      "attribute": [
+        "outbound_ip_addresses"
+      ]
+    },
+    {
+      "resource": "azurerm_windows_web_app.app",
+      "attribute": [
+        "default_hostname"
+      ]
+    },
+    {
+      "resource": "azurerm_service_plan.plan",
+      "attribute": [
+        "location"
+      ]
+    }
+  ],
+  "timestamp": "2024-04-29T15:13:17Z",
+  "errored": false
+}

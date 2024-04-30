@@ -1,0 +1,8 @@
+resource_group_name     = "terraform-mssql-rg"
+resource_group_location = "westeurope"
+app_service_plan_name   = "appserviceplan-web-21"
+app_service_name        = "terraform-webapp"
+sql_server_name         = "terraform-mssqlserver"
+sql_database_name       = "productsDB"
+sql_admin_login         = "jones23"
+sql_admin_password      = "101Jones@_12345"

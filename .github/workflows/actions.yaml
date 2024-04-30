@@ -1,0 +1,61 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Terraform-Azure-SQL-Database-Deployment
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  resourcegroups:
+    name: 'Terraform Depoly Resource'
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Terraform
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: checkout Repo
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform 
+      uses: hashicorp/setup-terraform@v2
+
+    - name: 'Terraform init'
+      run: terraform init 
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }} 
+    
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan 
+      run: terraform plan
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+                    
+    - name: 'Terraform apply'
+      run: terraform apply --auto-approve  
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.MVP_SUBSCRIPTION }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
