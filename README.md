@@ -319,7 +319,7 @@ mkdir -p .github/workflows
 git config --global user.name <username>
 git config --global user.email <user@example.com>
 ```
-4. Initialise/rrinitialise the repo
+4. Initialise/reinitialise the repo
 ```
 git init
 ```
