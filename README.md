@@ -337,7 +337,7 @@ az account list --query "[].{Name:name, SubscriptionId:id}" --output table      
 
 az ad sp create-for-rbac --name "SP-GitHubAction-Blog" --role contributor --scopes /subscriptions/{subscriptionid} --sdk-auth  # Creates the service principal
 ```
-7. Create required GitHub secrets.
+7. Create required GitHub secrets. 
 To create the secret in GitHub:
 - In the GiHub repo, click on **Settings**
 - Then click on the **DropDown** next to **Secrets and Variables**<p>
